@@ -22,10 +22,27 @@
                console.log("WebAssembly is not supported in your browser")
             }
 
+            function clickedEval() {
+                let board = document.getElementById("board").value;
+                let moves = document.getElementById("moves").value;
+
+                let result = evaluateMoves(board, moves);
+
+                document.getElementById("result").value = result;
+                console.log(result);
+            };
+
         </script>
     </head>
     <body>
         <main id="wasm"></main>
+
+        <textarea id="board" width="50%" height="200px">Enter Board State Here</textarea><br />
+        <textarea id="moves" width="50%" height="200px">Enter Move Array Here</textarea><br />
+
+        <button onclick="clickedEval()" value="Submit" />Eval</button><br />
+
+        <textarea id="result" disabled=true width="50%" height="200px">Results will come here</textarea>
     </body>
 </html>
 

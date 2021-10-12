@@ -111,8 +111,8 @@ func boardToJson(board rules.BoardState) string {
 }
 
 func evaluateMoves(this js.Value, args []js.Value) interface{} {
-    movesString := args[0].String()
-    boardString := args[1].String()
+    movesString := args[1].String()
+    boardString := args[0].String()
 
     standard := rules.StandardRuleset{
         FoodSpawnChance:     0,
