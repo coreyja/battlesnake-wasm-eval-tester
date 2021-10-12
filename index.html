@@ -3,35 +3,41 @@
     <head>
         <meta charset="utf-8">
         <script src="wasm_tester/wasm_exec.js"></script>
+
+        <script type="module">
+              import init, {evaluateMoves} from "./rust-wasm/pkg/rust_wasm.js";
+              init()
+                .then(() => {
+                  window.rustEval = evaluateMoves;
+                });
+        </script>
+        <script type="module">
+            import { init } from "./wasm/official.js";
+
+            init().then((x) => {
+                window.goEval = x;
+            });
+        </script>
         <script>
-
-            if (WebAssembly) {
-                 // WebAssembly.instantiateStreaming is not currently available in Safari
-                 if (WebAssembly && !WebAssembly.instantiateStreaming) { // polyfill
-                     WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                        const source = await (await resp).arrayBuffer();
-                         return await WebAssembly.instantiate(source, importObject);
-                     };
-                 }
-
-                 const go = new Go();
-                 WebAssembly.instantiateStreaming(fetch("../wasm/official.wasm"), go.importObject).then((result) => {
-                    go.run(result.instance);
-                 });
-            } else {
-               console.log("WebAssembly is not supported in your browser")
-            }
-
-            function clickedEval() {
+            function clickedGoEval() {
                 let board = document.getElementById("board").value;
                 let moves = document.getElementById("moves").value;
 
-                let result = evaluateMoves(board, moves);
+                let result = window.goEval(board, moves);
 
                 document.getElementById("result").value = result;
                 console.log(result);
             };
 
+            function clickedRustEval() {
+                let board = document.getElementById("board").value;
+                let moves = document.getElementById("moves").value;
+
+                let result = window.rustEval(board, moves);
+
+                document.getElementById("result").value = result;
+                console.log(result);
+            };
         </script>
     </head>
     <body>
@@ -40,7 +46,8 @@
         <textarea id="board" width="50%" height="200px">Enter Board State Here</textarea><br />
         <textarea id="moves" width="50%" height="200px">Enter Move Array Here</textarea><br />
 
-        <button onclick="clickedEval()" value="Submit" />Eval</button><br />
+        <button onclick="clickedGoEval()" value="Submit" />Go Eval</button><br />
+        <button onclick="clickedRustEval()" value="Submit" />Rust Eval</button><br />
 
         <textarea id="result" disabled=true width="50%" height="200px">Results will come here</textarea>
     </body>
