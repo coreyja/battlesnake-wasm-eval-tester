@@ -82,6 +82,7 @@ func boardToJson(board rules.BoardState) string {
     for _, s := range board.Snakes {
         var snakeItem = make(map[string]interface{})
         snakeItem["id"] = s.ID
+        snakeItem["health"] = s.Health
 
         var snakeBody []map[string]int32
         for _, b := range s.Body {

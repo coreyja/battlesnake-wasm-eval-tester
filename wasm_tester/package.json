@@ -1,0 +1,14 @@
+{
+  "name": "wasm_tester",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "esbuild": "^0.13.5",
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "watch" : "esbuild index.js --bundle --outdir=out --watch"
+  }
+}

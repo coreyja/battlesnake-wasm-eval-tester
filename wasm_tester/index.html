@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="./wasm_exec.js"></script>
+        <script src="./out/index.js"></script>
+
+        <script type="module">
+            import { init } from "../wasm/official.js";
+
+            init().then((x) => {
+                window.goEval = x;
+            });
+        </script>
+    </head>
+    <body>
+        <main id="wasm"></main>
+
+        <textarea id="board" width="50%" height="200px">Enter Board State Here</textarea><br />
+        <textarea id="moves" width="50%" height="200px">Enter Move Array Here</textarea><br />
+
+        <button value="Submit" id="go-btn" />Go Eval</button><br />
+        <button value="Submit" id="rust-btn" />Rust Eval</button><br />
+        <button value="Submit" id="compare-btn" />Compare</button><br />
+
+        <textarea id="result" disabled=true width="50%" height="200px">Results will come here</textarea>
+    </body>
+</html>
+
