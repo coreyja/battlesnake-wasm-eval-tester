@@ -1,6 +1,15 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
+* @returns {string}
+*/
+export function randomGame(): string;
+/**
+* @param {string} board
+* @returns {string}
+*/
+export function displayGame(board: string): string;
+/**
 * @param {string} board
 * @param {string} moves
 * @returns {string}
@@ -11,11 +20,14 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly randomGame: (a: number) => void;
+  readonly displayGame: (a: number, b: number, c: number) => void;
   readonly evaluateMoves: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
+  readonly __wbindgen_free: (a: number, b: number) => void;
   readonly __wbindgen_malloc: (a: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number) => number;
-  readonly __wbindgen_free: (a: number, b: number) => void;
+  readonly __wbindgen_exn_store: (a: number) => void;
 }
 
 /**

@@ -16,14 +16,34 @@
     <body>
         <main id="wasm"></main>
 
+        <span>Fuzzed X Times:</span>
+        <span id="counter">0</span>
+        <br />
+
         <textarea id="board" width="50%" height="200px">Enter Board State Here</textarea><br />
         <textarea id="moves" width="50%" height="200px">Enter Move Array Here</textarea><br />
 
         <button value="Submit" id="go-btn" />Go Eval</button><br />
         <button value="Submit" id="rust-btn" />Rust Eval</button><br />
         <button value="Submit" id="compare-btn" />Compare</button><br />
-
+        <button value="Submit" id="gen-random-game" />Random Game</button><br />
+        <button value="Submit" id="gen-random-moves" />Random Moves</button><br />
+        <button value="Submit" id="run-fuzz" />Run Single Fuzz</button><br />
+        <button value="Submit" id="run-fuzzes" />Fuzz in Loop</button><br />
         <textarea id="result" disabled=true width="50%" height="200px">Results will come here</textarea>
+
+        <label>
+            Before
+            <textarea id="before" disabled=true width="50%" height="200px">Results will come here</textarea>
+        </label>
+        <label>
+            Go
+            <textarea id="goResult" disabled=true width="50%" height="200px">Results will come here</textarea>
+        </label>
+        <label>
+            Rust
+            <textarea id="rustResult" disabled=true width="50%" height="200px">Results will come here</textarea>
+        </label>
     </body>
 </html>
 

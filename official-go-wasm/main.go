@@ -60,7 +60,7 @@ func boardFromJson(boardStr string) rules.BoardState {
 }
 
 func boardToJson(board rules.BoardState) string {
-    var food []map[string]int32
+    food := []map[string]int32{}
     for _, f := range board.Food {
         var foodItem = make(map[string]int32)
         foodItem["x"] = f.X
@@ -69,8 +69,8 @@ func boardToJson(board rules.BoardState) string {
         food = append(food, foodItem)
     }
 
-    var hazard []map[string]int32
-    for _, f := range board.Food {
+    hazard := []map[string]int32{}
+    for _, f := range board.Hazards {
         var hazardItem = make(map[string]int32)
         hazardItem["x"] = f.X
         hazardItem["y"] = f.Y
@@ -80,22 +80,25 @@ func boardToJson(board rules.BoardState) string {
 
     var snakes []map[string]interface{}
     for _, s := range board.Snakes {
-        var snakeItem = make(map[string]interface{})
-        snakeItem["id"] = s.ID
-        snakeItem["health"] = s.Health
+        if s.EliminatedCause == rules.NotEliminated {
+            var snakeItem = make(map[string]interface{})
+            snakeItem["id"] = s.ID
+            snakeItem["health"] = s.Health
+            snakeItem["death"] = s.EliminatedCause
 
-        var snakeBody []map[string]int32
-        for _, b := range s.Body {
-            var bodyItem = make(map[string]int32)
-            bodyItem["x"] = b.X
-            bodyItem["y"] = b.Y
+            var snakeBody []map[string]int32
+            for _, b := range s.Body {
+                var bodyItem = make(map[string]int32)
+                bodyItem["x"] = b.X
+                bodyItem["y"] = b.Y
 
-            snakeBody = append(snakeBody, bodyItem)
+                snakeBody = append(snakeBody, bodyItem)
+            }
+
+            snakeItem["body"] = snakeBody
+
+            snakes = append(snakes, snakeItem)
         }
-
-        snakeItem["body"] = snakeBody
-
-        snakes = append(snakes, snakeItem)
     }
 
     var boardMap = make(map[string]interface{})
