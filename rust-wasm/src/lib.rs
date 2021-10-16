@@ -162,6 +162,10 @@ fn random_snake(rng: &mut ThreadRng, id: &str, g: &Game) -> Option<BattleSnake> 
         }
     }
 
+    if body.len() < 3 {
+        return None;
+    }
+
     Some(BattleSnake {
         id: id.to_owned(),
         name: id.to_owned(),
@@ -206,8 +210,8 @@ fn random_game() -> Game {
         },
     };
 
-    // let number_of_snakes: i8 = rng.gen_range(1..=8);
-    let number_of_snakes: i8 = 2;
+    let number_of_snakes: i8 = rng.gen_range(1..=4);
+    // let number_of_snakes: i8 = 2;
 
     for i in 0..number_of_snakes {
         if let Some(s) = random_snake(&mut rng, &format!("{}", i), &game) {
