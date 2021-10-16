@@ -241,6 +241,8 @@ pub fn displayGame(board: &str) -> String {
 
 #[wasm_bindgen]
 pub fn evaluateMoves(board: &str, moves: &str) -> String {
+    console_error_panic_hook::set_once();
+
     let board: Game = serde_json::from_str(board).unwrap();
     let moves: Vec<WasmMoves> = serde_json::from_str(moves).unwrap();
     let moves = moves.into_iter().map(|m| m.into_tuple()).collect_vec();
