@@ -237,6 +237,7 @@ pub fn randomGame() -> String {
 
 #[wasm_bindgen]
 pub fn displayGame(board: &str) -> String {
+    console_error_panic_hook::set_once();
     let g: Game = serde_json::from_str(board).unwrap();
     let id_map = build_snake_id_map(&g);
     let compact = CellBoard4Snakes11x11::convert_from_game(g, &id_map).unwrap();
