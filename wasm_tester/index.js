@@ -53,29 +53,33 @@ function clickedRustEval() {
 }
 
 function clickedCompare() {
-  let board = document.getElementById("board").value;
-  let moves = document.getElementById("moves").value;
+  try {
+    let board = document.getElementById("board").value;
+    let moves = document.getElementById("moves").value;
 
-  const rawGoResult = window.goEval(board, moves);
-  let goResult = JSON.parse(rawGoResult);
-  const rustRawResult = rustEval(board, moves);
-  let rustResult = JSON.parse(rustRawResult);
+    document.getElementById("before").value = displayGame(board);
 
-  console.log(compareBoards(goResult, rustResult.board));
+    const rawGoResult = window.goEval(board, moves);
+    let goResult = JSON.parse(rawGoResult);
+    document.getElementById("goResult").value = JSON.stringify(goResult, null, 4);
 
-  const result = compareBoards(goResult, rustResult.board);
+    const rustRawResult = rustEval(board, moves);
+    let rustResult = JSON.parse(rustRawResult);
+    document.getElementById("rustResult").value = displayGame(rustRawResult);
 
-  if (result) {
-    document.body.style.background = '#00FF00';
-  } else {
+    const result = compareBoards(goResult, rustResult.board);
+
+    if (result) {
+      document.body.style.background = '#00FF00';
+    } else {
+      document.body.style.background = '#ff0000';
+    }
+
+    return result;
+  } catch (e) {
     document.body.style.background = '#ff0000';
+    throw e;
   }
-
-  document.getElementById("before").value = displayGame(board);
-  document.getElementById("rustResult").value = displayGame(rustRawResult);
-  document.getElementById("goResult").value = JSON.stringify(goResult, null, 4);
-
-  return result;
 }
 
 const MOVES = ['up', 'down', 'left', 'right'];
@@ -89,7 +93,6 @@ const randomMove = () => {
 
 const singleFuzz = () => {
     const count = parseInt(document.getElementById("counter").innerHTML);
-    console.log(count);
 
     const r = randomGame();
     const game = JSON.parse(r);
@@ -97,6 +100,9 @@ const singleFuzz = () => {
 
     document.getElementById("board").value = r;
     document.getElementById("moves").value = JSON.stringify(moves);
+    document.getElementById("before").value = ""
+    document.getElementById("rustResult").value = ""
+    document.getElementById("goResult").value = ""
 
     const result = clickedCompare();
 
