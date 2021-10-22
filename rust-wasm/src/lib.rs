@@ -189,6 +189,7 @@ fn random_game() -> Game {
         },
     };
 
+    // TODO: Choose width and height randomly too
     let mut game = Game {
         game: nested_game,
         turn: 0,
@@ -210,16 +211,22 @@ fn random_game() -> Game {
         },
     };
 
+    // TODO: Maybe choose more snakes if the board is bigger?
     let number_of_snakes: i8 = rng.gen_range(1..=4);
-    // let number_of_snakes: i8 = 2;
 
     for i in 0..number_of_snakes {
+        // TODO: Would it be better to build all snakes at once? Not sure it matters if we run
+        // enough games... But would it make the games more realistic? If so that would reduce the
+        // time of fuzzing which would be good
         if let Some(s) = random_snake(&mut rng, &format!("{}", i), &game) {
             game.board.snakes.push(s);
         } else {
             break;
         }
     }
+
+    // TODO: Choose a max number of foods and try to add them to the board
+    // TODO: Choose a max number of hazards squares and add them to the board
 
     if let Some(you) = game.board.snakes.get(0) {
         game.you = you.clone();
