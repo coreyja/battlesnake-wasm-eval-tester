@@ -278,3 +278,27 @@ pub fn evaluateMoves(board: &str, moves: &str) -> String {
 
     new_game_json
 }
+
+#[derive(Debug)]
+struct Instruments;
+impl SimulatorInstruments for Instruments {
+    fn observe_simulation(&self, _: std::time::Duration) {}
+}
+
+#[wasm_bindgen]
+pub fn evaluateMovesWire(board: &str, moves: &str) -> String {
+    console_error_panic_hook::set_once();
+
+    let board: Game = serde_json::from_str(board).unwrap();
+    let moves: Vec<WasmMoves> = serde_json::from_str(moves).unwrap();
+    let moves = moves
+        .into_iter()
+        .map(|m| m.into_tuple())
+        .map(|(id, mv)| (id, vec![mv]))
+        .collect_vec();
+
+    let results = &board.simulate_with_moves(&Instruments, moves);
+    let new_board = results.first().unwrap();
+
+    serde_json::to_string(&new_board.1).unwrap()
+}

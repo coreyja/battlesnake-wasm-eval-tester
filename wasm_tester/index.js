@@ -1,4 +1,4 @@
-import init, {evaluateMoves as rustEval, displayGame, randomGame } from "../wasm/rust/rust_wasm.js";
+import init, {evaluateMovesWire as rustEval, displayGame, randomGame } from "../wasm/rust/rust_wasm.js";
 init("../wasm/rust/rust_wasm_bg.wasm")
 
 var isEqual = require("lodash/isEqual");
