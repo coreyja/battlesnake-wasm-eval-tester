@@ -2,8 +2,9 @@ use wasm_bindgen::prelude::*;
 
 use std::collections::{HashMap, VecDeque};
 
+use battlesnake_game_types::compact_representation::MoveEvaluatableGame;
 use battlesnake_game_types::{
-    compact_representation::{CellBoard4Snakes11x11, MoveEvaluatableGame},
+    compact_representation::CellBoard4Snakes11x11,
     types::*,
     wire_representation::{BattleSnake, Board, Game, NestedGame, Position, Ruleset, Settings},
 };
@@ -116,6 +117,7 @@ fn build_game_from_compact(
         you,
         turn: 0,
         game: NestedGame {
+            timeout: 600,
             id: "faked".to_owned(),
             ruleset: Ruleset {
                 name: "standard".to_owned(),
@@ -181,6 +183,7 @@ fn random_game() -> Game {
     let mut rng = thread_rng();
 
     let nested_game = NestedGame {
+        timeout: 600,
         id: "faked".to_owned(),
         ruleset: Ruleset {
             name: "standard".to_owned(),
